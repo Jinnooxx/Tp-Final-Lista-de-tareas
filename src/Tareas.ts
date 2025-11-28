@@ -9,13 +9,13 @@ export function dificultadDesdeNumero(nivel: number): Dificultad {
 
 export class Tareas {
 
-    id: String;
-    titulo: String;
+    id: string;
+    titulo: string;
     dificultad: Dificultad;
     eliminada: boolean = false;
     completada: boolean = false;
 
-    constructor(titulo: String, nivelDificultad: number){
+    constructor(titulo: string, nivelDificultad: number){
 
         this.id = crypto.randomUUID();
         this.titulo = titulo;
