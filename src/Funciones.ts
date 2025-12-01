@@ -22,22 +22,22 @@ export function agregarTarea(lista: Tareas[], nueva: Tareas): Tareas[] {
 }
 
 export function softDelete(lista: Tareas[], id: string): Tareas[] {
-  return lista.map(t => {
-    if (t.id === id) {
+    return lista.map(t => {
+        if (t.id === id) {
 
-      const tarea = new Tareas(t.titulo, 1);
-      Object.assign(tarea, t); 
-      tarea.ultimaEdicion = new Date();
+            const tarea = new Tareas(t.titulo, 1);
+            Object.assign(tarea, t);
+            tarea.ultimaEdicion = new Date();
 
-      return tarea;
-    }
-    return t;
-  });
+            return tarea;
+        }
+        return t;
+    });
 }
 
 
 export function hardDelete(lista: Tareas[], id: string): Tareas[] {
-  return lista.filter(t => t.id !== id);
+    return lista.filter(t => t.id !== id);
 }
 
 
@@ -135,6 +135,36 @@ export function buscarPorPalabraClave(
         (t.descripcion?.toLowerCase().includes(clave) ?? false)
     );
 }
+
+export function obtenerTitulos(lista: Tareas[]): { id: string, titulo: string }[] {
+    return lista
+        .filter(t => !t.eliminada)
+        .map(t => ({
+            id: t.id,
+            titulo: t.titulo
+        }));
+}
+
+
+
+export function mostrarTareaDetallada(t: Tareas): string {
+    return `
+            === DETALLES DE LA TAREA ===
+
+            📌 Título: ${t.titulo}
+            📝 Descripción: ${t.descripcion || "—"}
+            🔥 Dificultad: ${t.dificultad}
+            📅 Creada: ${t.creacion}
+            🛠 Última edición: ${t.ultimaEdicion || "—"}
+            📍 Estado: ${t.estado}
+            🗑 Eliminada: ${t.eliminada ? "Sí" : "No"}
+            ⏳ Vencimiento: ${t.vencimiento || "—"}
+
+            `;
+}
+
+
+
 
 
 

@@ -11,6 +11,7 @@ import {
     ordenarPorDificultad,
     cantidadPorEstado,
     softDelete,
+    obtenerTitulos,
     hardDelete
 } from "./Funciones";
 
@@ -36,9 +37,17 @@ export class GestorTareas {
         }
 
         const data = fs.readFileSync(this.archivo, "utf8");
+
+        if (!data.trim()) {
+            this.lista = [];
+            return;
+        }
+
         const json = JSON.parse(data);
 
-        this.lista = json.map((t: any) => Object.assign(new Tareas(t.titulo, 1), t));
+        this.lista = json.map((t: any) =>
+            Object.assign(new Tareas(t.titulo, 1), t)
+        );
     }
 
 
@@ -66,7 +75,7 @@ export class GestorTareas {
     }
 
 
-    
+
 
     completar(id: string) {
         this.lista = marcarTareaCompletada(this.lista, id);
@@ -99,4 +108,11 @@ export class GestorTareas {
     resumenEstados() {
         return cantidadPorEstado(this.lista);
     }
+
+    obtenerSoloTitulos() {
+        return obtenerTitulos(this.lista);
+    }
+
+
+
 }

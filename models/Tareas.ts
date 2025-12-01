@@ -18,7 +18,7 @@ export class Tareas {
     dificultad: Dificultad;
     descripcion?: string;
     estado: EstadoTarea;
-    cracion?: Date;
+    creacion?: Date;
     ultimaEdicion?: Date;
     vencimiento?: Date;
     eliminada: boolean = false;
@@ -30,7 +30,7 @@ export class Tareas {
         this.titulo = titulo;
         this.dificultad = dificultadDesdeNumero(nivelDificultad);
         this.estado = "Pendiente";
-        this.cracion = new Date();
+        this.creacion = new Date();
         this.ultimaEdicion = new Date();
 
 

@@ -1,6 +1,6 @@
 import PromptSync from "prompt-sync";
 import inquirer from "inquirer";
-
+import { ejecutarAccion } from "./AccionesMenu";
 
 
 export async function menuBienvenida(): Promise<void> {
@@ -22,7 +22,7 @@ export async function menuBienvenida(): Promise<void> {
  ░███      █ ░███  ░░░░███  ░███ ███ ███░░███    ░███ ░███ ░███░░░       ░███ ███ ███░░███  ░███     ░███░░░   ███░░███  ░░░░███
  ███████████ █████ ██████   ░░█████ ░░████████   ░░████████░░██████      ░░█████ ░░████████ █████    ░░██████ ░░████████ ██████ 
 ░░░░░░░░░░░ ░░░░░ ░░░░░░     ░░░░░   ░░░░░░░░     ░░░░░░░░  ░░░░░░        ░░░░░   ░░░░░░░░ ░░░░░      ░░░░░░   ░░░░░░░░ ░░░░░░  `);
-    const prompt = PromptSync();
+    PromptSync()("\n\n                                        Presioná ENTER para continuar...");        
     console.clear();
 }
 
@@ -39,20 +39,24 @@ export async function mostrarMenu() {
             type: "list",
             name: "opcion",
             prefix: "",
-            message: "Seleccioná una opción:",
+            message: "Seleccioná una opción:\n\n",
             pageSize: 10,
             choices: [
-                "1. Ver mis tareas",
-                "2. Buscar tarea",
-                "3. Ordenar tareas",
-                "4. Filtrar tareas",
-                "5. Modificar tarea",
-                "6. Agregar tarea",
-                "7. Eliminar tarea",
+                "[ Ver mis tareas ]\n",
+                "[ Buscar tarea ]\n",
+                "[ Ordenar tareas ]\n",
+                "[ Filtrar tareas ]\n",
+                "[ Modificar tarea ]\n",
+                "[ Agregar tarea ]\n",
+                "[ Eliminar tarea ]\n",
                 "0. Salir"
             ]
         }
 
     ]);
+
+    const numero = opcion[0]; 
+
+     await ejecutarAccion(numero);
 
 }
