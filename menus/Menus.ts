@@ -22,7 +22,7 @@ export async function menuBienvenida(): Promise<void> {
  ░███      █ ░███  ░░░░███  ░███ ███ ███░░███    ░███ ░███ ░███░░░       ░███ ███ ███░░███  ░███     ░███░░░   ███░░███  ░░░░███
  ███████████ █████ ██████   ░░█████ ░░████████   ░░████████░░██████      ░░█████ ░░████████ █████    ░░██████ ░░████████ ██████ 
 ░░░░░░░░░░░ ░░░░░ ░░░░░░     ░░░░░   ░░░░░░░░     ░░░░░░░░  ░░░░░░        ░░░░░   ░░░░░░░░ ░░░░░      ░░░░░░   ░░░░░░░░ ░░░░░░  `);
-    PromptSync()("\n\n                                        Presioná ENTER para continuar...");        
+    PromptSync()("\n\n                                        Presioná ENTER para continuar...");
     console.clear();
 }
 
@@ -31,32 +31,39 @@ export async function menuBienvenida(): Promise<void> {
 
 export async function mostrarMenu() {
 
-    console.clear();
+    let salir = false;
+
+    while (!salir) {
+
+        console.clear();
 
 
-    const { opcion } = await inquirer.prompt([
-        {
-            type: "list",
-            name: "opcion",
-            prefix: "",
-            message: "Seleccioná una opción:\n\n",
-            pageSize: 10,
-            choices: [
-                "[ Ver mis tareas ]\n",
-                "[ Buscar tarea ]\n",
-                "[ Ordenar tareas ]\n",
-                "[ Filtrar tareas ]\n",
-                "[ Modificar tarea ]\n",
-                "[ Agregar tarea ]\n",
-                "[ Eliminar tarea ]\n",
-                "0. Salir"
-            ]
-        }
+        const { opcion } = await inquirer.prompt([
+            {
+                type: "list",
+                name: "opcion",
+                prefix: "",
+                message: "Seleccioná una opción:\n\n",
+                pageSize: 20,
+                choices: [
+                    { name: "📋  Ver mis tareas\n", value: "1" },
+                    { name: "🔍  Buscar tarea\n", value: "2" },
+                    { name: "✨  Ordenar tareas\n", value: "3" },
+                    { name: "🎯  Filtrar tareas\n", value: "4" },
+                    { name: "✏️  Modificar tarea\n", value: "5" },
+                    { name: "➕  Agregar tarea\n", value: "6" },
+                    { name: "🗑️  Eliminar tarea\n", value: "7" },
+                    { name: "🗑️  Papelera      \n", value: "8" },
+                    { name: "🚪  Salir\n", value: "0" }
+                ]
+            }
 
-    ]);
+        ]);
 
-    const numero = opcion[0]; 
+        const numero = opcion[0];
 
-     await ejecutarAccion(numero);
+        await ejecutarAccion(numero);
+
+    }
 
 }

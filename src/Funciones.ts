@@ -27,6 +27,7 @@ export function softDelete(lista: Tareas[], id: string): Tareas[] {
 
             const tarea = new Tareas(t.titulo, 1);
             Object.assign(tarea, t);
+            tarea.eliminada = true;
             tarea.ultimaEdicion = new Date();
 
             return tarea;
@@ -90,11 +91,6 @@ export function ordenarPorDificultad(lista: Tareas[]): Tareas[] {
     return [...lista].sort((a, b) => a.dificultad.localeCompare(b.dificultad));
 }
 
-export function totalTareas(lista: Tareas[]): number {
-
-    return lista.length;
-
-}
 
 export function cantidadPorEstado(lista: Tareas[]): Record<string, number> {
     return lista.reduce((acc, t) => {
@@ -108,6 +104,14 @@ export function tareasAlta(lista: Tareas[]): Tareas[] {
 
     return lista.filter(t => t.dificultad === "🌕🌕🌕");
 
+}
+
+export function tareasMedia(lista: Tareas[]): Tareas[] {
+    return lista.filter(t => t.dificultad === "🌓🌓🌓");
+}
+
+export function tareasBaja(lista: Tareas[]): Tareas[] {
+    return lista.filter(t => t.dificultad === "🌑🌑🌑");
 }
 
 

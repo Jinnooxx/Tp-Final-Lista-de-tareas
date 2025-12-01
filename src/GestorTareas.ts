@@ -11,8 +11,12 @@ import {
     ordenarPorDificultad,
     cantidadPorEstado,
     softDelete,
+    tareasAlta,
+    tareasMedia,
+    tareasBaja,
     obtenerTitulos,
-    hardDelete
+    hardDelete,
+    buscarTareaPorTitulo
 } from "./Funciones";
 
 import { Tareas } from "../models/Tareas";
@@ -89,16 +93,27 @@ export class GestorTareas {
 
     }
 
-    buscar(palabra: string): Tareas[] {
+    buscarPorTitulo(palabra: string): Tareas[] {
+        return buscarTareaPorTitulo(this.lista, palabra);
+    }
+
+
+    buscarPalabraClave(palabra: string): Tareas[] {
         return buscarPorPalabraClave(this.lista, palabra);
     }
 
     ordenarTitulo() {
         this.lista = ordenarTitulo(this.lista);
+        this.guardar();
+        return this.lista;
+
     }
 
     ordenarDificultad() {
         this.lista = ordenarPorDificultad(this.lista);
+        this.guardar();
+        return this.lista;
+
     }
 
     obtener(): Tareas[] {
@@ -111,6 +126,47 @@ export class GestorTareas {
 
     obtenerSoloTitulos() {
         return obtenerTitulos(this.lista);
+    }
+
+    obtenerPapelera() {
+        return this.lista
+            .filter(t => t.eliminada)
+            .map(t => ({ id: t.id, titulo: t.titulo }));
+    }
+
+    restaurar(id: string) {
+        this.lista = this.lista.map(t => {
+            if (t.id === id) {
+                const tarea = new Tareas(t.titulo, 1);
+                Object.assign(tarea, t);
+                tarea.eliminada = false;
+                tarea.ultimaEdicion = new Date();
+                return tarea;
+            }
+
+            const copia = new Tareas(t.titulo, 1);
+            Object.assign(copia, t);
+            return copia;
+        });
+
+        this.guardar();
+    }
+
+    cantidadPorEstado(): Record<string, number> {
+    return cantidadPorEstado(this.lista);
+    }
+
+
+    tareasBaja(): Tareas[] {
+        return tareasBaja(this.lista);
+    }
+
+    tareasMedia(): Tareas[] {
+        return tareasMedia(this.lista);
+    }
+
+    tareasAlta(): Tareas[] {
+        return tareasAlta(this.lista);
     }
 
 
