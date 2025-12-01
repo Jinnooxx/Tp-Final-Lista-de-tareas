@@ -1,4 +1,4 @@
-import { Tareas } from "../models/Tareas";
+import { Tareas } from "../../models/Tareas";
 
 
 
@@ -155,14 +155,14 @@ export function mostrarTareaDetallada(t: Tareas): string {
     return `
             === DETALLES DE LA TAREA ===
 
-            📌 Título: ${t.titulo}
-            📝 Descripción: ${t.descripcion || "—"}
-            🔥 Dificultad: ${t.dificultad}
-            📅 Creada: ${t.creacion}
-            🛠 Última edición: ${t.ultimaEdicion || "—"}
-            📍 Estado: ${t.estado}
-            🗑 Eliminada: ${t.eliminada ? "Sí" : "No"}
-            ⏳ Vencimiento: ${t.vencimiento || "—"}
+            📌 Título: ${t.titulo}\n
+            📝 Descripción: ${t.descripcion || "—"}\n
+            🔥 Dificultad: ${t.dificultad}\n
+            📅 Creada: ${t.creacion}\n
+            🛠 Última edición: ${t.ultimaEdicion || "—"}\n
+            📍 Estado: ${t.estado}\n
+            🗑 Eliminada: ${t.eliminada ? "Sí" : "No"}\n
+            ⏳ Vencimiento: ${t.vencimiento || "—"}\n
 
             `;
 }

@@ -9,5 +9,16 @@
     "ultimaEdicion": "2025-12-01T16:13:07.354Z",
     "eliminada": false,
     "completada": false
+  },
+  {
+    "id": "5726199f-d796-4dc9-9bfc-cde5f10ed4ac",
+    "titulo": "tarea",
+    "dificultad": "🌑🌑🌑",
+    "descripcion": "tengo que ir a donde quiera ir",
+    "estado": "Pendiente",
+    "creacion": "2025-12-01T21:25:41.086Z",
+    "ultimaEdicion": "2025-12-01T21:25:41.086Z",
+    "eliminada": false,
+    "completada": false
   }
 ]

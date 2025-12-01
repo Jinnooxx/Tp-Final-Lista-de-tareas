@@ -3,8 +3,8 @@ import inquirer from "inquirer";
 import promptSync from "prompt-sync";
 const prompt = promptSync();
 import { Tareas } from "../models/Tareas";
-import { GestorTareas } from "../src/GestorTareas";
-import { mostrarTareaDetallada } from "../src/Funciones";
+import { GestorTareas } from "../src/services/GestorTareas";
+import { mostrarTareaDetallada } from "../src/utils/Funciones";
 
 const gestor = new GestorTareas();
 
@@ -14,7 +14,6 @@ const gestor = new GestorTareas();
 
 export async function ejecutarAccion(opcion: string) {
 
-    let salir: false;
 
 
     switch (opcion) {
@@ -48,7 +47,7 @@ export async function ejecutarAccion(opcion: string) {
             console.clear();
             console.log(mostrarTareaDetallada(tarea!));
 
-            prompt("ENTER para continuar...");
+            prompt("         ENTER para continuar...");
             break;
 
         case "2":
@@ -62,9 +61,9 @@ export async function ejecutarAccion(opcion: string) {
                         message: "Submenú de búsqueda:",
                         prefix: "",
                         choices: [
-                            "1. Buscar por título",
-                            "2. Buscar por palabra clave",
-                            "0. Volver"
+                            { name: "Buscar por título", value: "1" },
+                            { name: "Buscar por palabra clave", value: "2" },
+                            { name: "Volver", value: "0" }
                         ]
                     }
                 ]);
@@ -96,7 +95,7 @@ export async function ejecutarAccion(opcion: string) {
                         const tareaElegida = resultados.find(t => t.id === seleccion);
                         console.clear();
                         console.log(mostrarTareaDetallada(tareaElegida!));
-                        prompt("\nENTER para continuar...");
+                        prompt("\n           ENTER para continuar...");
                         break;
                     case "2":
                         const clave = prompt("Ingresá palabra clave: ");
@@ -120,16 +119,18 @@ export async function ejecutarAccion(opcion: string) {
 
                         const tareaElegida2 = encontrados.find(t => t.id === seleccion1);
                         console.clear();
-                        console.log(mostrarTareaDetallada(tareaElegida!));
-                        prompt("\nENTER para continuar...");
+                        console.log(mostrarTareaDetallada(tareaElegida2!));
+                        prompt("\n         ENTER para continuar...");
+                        console.clear();
                         break;
 
 
-                        break;
+
                     case "0":
                         volver = true;
                         break;
                 }
+                console.clear();
             }
 
             break;
@@ -171,7 +172,6 @@ export async function ejecutarAccion(opcion: string) {
             await inquirer.prompt([{ type: "input", name: "pause", message: "\nENTER para continuar..." }]);
             break;
         case "4":
-        case "4":
             console.clear();
             console.log("=== FILTRAR TAREAS ===\n");
 
@@ -193,7 +193,7 @@ export async function ejecutarAccion(opcion: string) {
 
             let resultado: Tareas[] = [];
 
-            
+
             if (tipoFiltro === "estado") {
                 const estados = gestor.cantidadPorEstado();
 
@@ -208,7 +208,7 @@ export async function ejecutarAccion(opcion: string) {
                 break;
             }
 
-            
+
             if (tipoFiltro === "dificultad") {
                 const { dificultadElegida } = await inquirer.prompt([
                     {
@@ -229,7 +229,7 @@ export async function ejecutarAccion(opcion: string) {
                 if (dificultadElegida === "alta") resultado = gestor.tareasAlta();
             }
 
-           
+
             console.clear();
             console.log("=== RESULTADOS DEL FILTRO ===\n");
 
@@ -264,12 +264,22 @@ export async function ejecutarAccion(opcion: string) {
                     name: "idEditar",
                     message: "Elegí una tarea para modificar:",
                     prefix: "",
-                    choices: titulosEditar.map(t => ({
+                    choices: [...titulosEditar.map(t => ({
                         name: `📝  [ ${t.titulo} ] (${t.id})`,
                         value: t.id
-                    }))
+                    })),
+                    { name: "↩️  Volver", value: "volver" }
+
+                    ]
+
                 }
             ]);
+
+
+            if (idEditar === "volver") {
+                break;
+            }
+
 
             const tareaOriginal = gestor.obtener().find(t => t.id === idEditar);
 
@@ -468,7 +478,7 @@ export async function ejecutarAccion(opcion: string) {
                 console.log("\n🗑️ Tarea eliminada definitivamente.\n");
             }
 
-            prompt("ENTER para continuar...");
+            prompt("          ENTER para continuar...");
             break;
 
 

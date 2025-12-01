@@ -17,9 +17,9 @@ import {
     obtenerTitulos,
     hardDelete,
     buscarTareaPorTitulo
-} from "./Funciones";
+} from "../utils/Funciones";
 
-import { Tareas } from "../models/Tareas";
+import { Tareas } from "../../models/Tareas";
 
 
 
